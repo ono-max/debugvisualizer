@@ -2,6 +2,8 @@
 
 require_relative "lib/debugvisualizer/version"
 
+$LOAD_PATH.unshift(File.join(__dir__, 'lib'))
+
 Gem::Specification.new do |spec|
   spec.name = "debugvisualizer"
   spec.version = DebugVisualizer::VERSION
