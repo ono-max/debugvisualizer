@@ -4,13 +4,18 @@ require 'securerandom'
 require 'json'
 
 module DebugVisualizer
-  def register &block
+  def register klass = nil, &block
     raise unless block_given?
 
     unless defined? GENERATOR
       DebugVisualizer.const_set(:GENERATOR, JSONGenerator.new)
     end
-    GENERATOR.register_block block
+
+    if klass
+      GENERATOR.register_block_with_class klass, block
+    else
+      GENERATOR.register_block block
+    end
   end
 
   def to_debug_visualizer_protocol_json preferred_id, data
@@ -24,10 +29,15 @@ module DebugVisualizer
 
     def initialize
       @blocks = []
+      @block_with_class = {}
     end
 
     def register_block block
       @blocks << block
+    end
+
+    def register_block_with_class klass, block
+      @block_with_class[klass] = block
     end
 
     def generate preferred_id, data
@@ -36,6 +46,15 @@ module DebugVisualizer
         result = block.call(data)
         if result && result[:id] && result[:data]
           extractors << get_extractor(result)
+        end
+      }
+
+      @block_with_class.each{|klass, block|
+        if data.kind_of? klass
+          result = block.call(data)
+          if result && result[:id] && result[:data]
+            extractors << get_extractor(result)
+          end
         end
       }
 
