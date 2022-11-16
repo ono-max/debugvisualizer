@@ -40,3 +40,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/debugvisualizer.
+
+## Acknowledgement
+
+[Koichi Sasada (@ko1)](https://github.com/ko1) - He reviewed API and gave me many ideas to improve `debugvisualizer`.
