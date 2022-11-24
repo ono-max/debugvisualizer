@@ -19,7 +19,12 @@ module DebugVisualizer
   end
 
   def to_debug_visualizer_protocol_json preferred_id, data
-    GENERATOR.generate preferred_id, data
+    json = GENERATOR.generate preferred_id, data
+    if defined? ::DEBUGGER__::NaiveString
+      ::DEBUGGER__::NaiveString.new(json)
+    else
+      json
+    end
   end
 
   module_function :register, :to_debug_visualizer_protocol_json
