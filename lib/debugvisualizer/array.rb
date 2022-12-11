@@ -10,7 +10,7 @@ module DebugVisualizer
               { "y": data },
           ]
         }
-        name = "Array As Plot"
+        name = "Array As Line Chart"
       else
         columns = []
         data.each{|elem|

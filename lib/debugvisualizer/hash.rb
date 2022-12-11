@@ -15,8 +15,8 @@ module DebugVisualizer
   DebugVisualizer.register do |data|
     if data.is_a?(Hash)
       {
-        id: "hash_as_plot",
-        name: "Hash As Plot",
+        id: "hash_as_line_graph",
+        name: "Hash As Line Chart",
         data: {
           kind: { plotly: true },
           data: [
