@@ -29,4 +29,23 @@ module DebugVisualizer
       }
     end
   end
+
+  DebugVisualizer.register do |data|
+    if data.is_a?(Hash)
+      {
+        id: "hash_as_pie_chart",
+        name: "Hash As Pie Chart",
+        data: {
+          kind: { plotly: true },
+          data: [
+            {
+              labels: data.keys,
+              values: data.values,
+              type: :pie
+            }
+          ]
+        }
+      }
+    end
+  end
 end
