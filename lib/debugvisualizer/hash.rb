@@ -6,7 +6,7 @@ module DebugVisualizer
         name: "Hash As Table",
         data: {
           kind: { table: true },
-          rows: [data]
+          rows: data.map{|key, val| {key: key, value: val}}
         }
       }
     end
