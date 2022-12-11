@@ -15,7 +15,7 @@ module DebugVisualizer
   def self.get_tree(elems)
     result = []
     elems.each_element{|elem|
-      child = []
+      children = []
       elem.attributes.each_attribute{|atr|
         items = []
         items << {
@@ -26,13 +26,13 @@ module DebugVisualizer
           text: atr.value,
           emphasis: 'style2'
         }
-        child << {
+        children << {
          items: items, 
          children: []
         }
       }
       if elem.has_elements?
-        child.push *get_tree(elem)
+        children.push *get_tree(elem)
       end
       tree = {
         items: [
@@ -41,7 +41,7 @@ module DebugVisualizer
             emphasis: 'style1'
           }          
         ],
-        children: child
+        children: children
       }
       if elem.text && elem.text.strip != ""
         tree[:items] << {
