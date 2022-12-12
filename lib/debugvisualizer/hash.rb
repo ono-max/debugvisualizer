@@ -4,6 +4,7 @@ module DebugVisualizer
       {
         id: "hash_as_table",
         name: "Hash As Table",
+        priority: 50,
         data: {
           kind: { table: true },
           rows: data.map{|key, val| {key: key, value: val}}
@@ -17,6 +18,7 @@ module DebugVisualizer
       {
         id: "hash_as_line_chart",
         name: "Hash As Line Chart",
+        priority: 100,
         data: {
           kind: { plotly: true },
           data: [
@@ -35,6 +37,7 @@ module DebugVisualizer
       {
         id: "hash_as_pie_chart",
         name: "Hash As Pie Chart",
+        priority: 20,
         data: {
           kind: { plotly: true },
           data: [
