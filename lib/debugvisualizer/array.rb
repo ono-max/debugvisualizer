@@ -32,7 +32,7 @@ module DebugVisualizer
       {
         id: "array_as_grid",
         name: "Array As Grid",
-        priority: 30,
+        priority: 80,
         data: new_data
       }
     end
@@ -47,6 +47,25 @@ module DebugVisualizer
         data: {
           kind: { table: true },
           rows: data
+        }
+      }
+    end
+  end
+
+  DebugVisualizer.register do |data|
+    if data.is_a?(Array) && data.all? {|v| v.is_a?(Integer) || v.is_a?(Float) }
+      {
+        id: "array_as_bar_chart",
+        name: "Array As Bar Chart",
+        priority: 50,
+        data: {
+          kind: { plotly: true },
+          data: [
+            {
+              y: data,
+              type: :bar
+            }
+          ]
         }
       }
     end
