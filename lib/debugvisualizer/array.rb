@@ -1,41 +1,37 @@
 module DebugVisualizer
   DebugVisualizer.register do |data|
-    if data.is_a?(Array)
-      new_data = nil
-      name = ""
-      if data.all? {|v| v.is_a?(Integer) || v.is_a?(Float) }
-        new_data = {
+    if data.is_a?(Array) && data.all? {|v| v.is_a?(Integer) || v.is_a?(Float) }
+      {
+        id: "array_as_line_chart",
+        name: "Array As Line Chart",
+        priority: 100,
+        data: {
           "kind":{ "plotly": true },
           "data":[
               { "y": data },
           ]
         }
-        name = "Array As Line Chart"
-      else
-        columns = []
-        data.each{|elem|
-          columns << {content: elem.to_s, tag: elem.to_s}
-        }
-        new_data = {
-          "kind": { "grid": true },
-          "text": "test",
-          "columnLabels": [
-              {
-                  "label": "test"
-              }
-          ],
-          "rows": [
-              {
-                  "label": "foo",
-                  "columns": columns
-              }
-          ]
-        }
-        name = "Array As Grid"
-      end
+      }
+    end
+  end
+
+  DebugVisualizer.register do |data|
+    if data.is_a?(Array)
+      columns = []
+      data.each{|elem|
+        columns << {content: elem.to_s}
+      }
+      new_data = {
+        "kind": { "grid": true },
+        "rows": [
+            {
+                "columns": columns
+            }
+        ]
+      }
       {
-        id: "array_visualizer",
-        name: name,
+        id: "array_as_grid",
+        name: "Array As Grid",
         priority: 30,
         data: new_data
       }
