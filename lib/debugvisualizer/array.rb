@@ -37,4 +37,18 @@ module DebugVisualizer
       }
     end
   end
+
+  DebugVisualizer.register do |data|
+    if data.is_a?(Array) && data.all? {|v| v.is_a?(Hash) }
+      {
+        id: "array_as_table",
+        name: "Array As Table",
+        priority: 100,
+        data: {
+          kind: { table: true },
+          rows: data
+        }
+      }
+    end
+  end
 end
