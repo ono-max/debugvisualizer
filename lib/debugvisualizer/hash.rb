@@ -14,11 +14,11 @@ module DebugVisualizer
   end
 
   DebugVisualizer.register do |data|
-    if data.is_a?(Hash)
+    if data.is_a?(Hash) && data.values.all? {|v| v.is_a?(Integer) || v.is_a?(Float) }
       {
         id: "hash_as_line_chart",
         name: "Hash As Line Chart",
-        priority: 100,
+        priority: 80,
         data: {
           kind: { plotly: true },
           data: [
@@ -33,7 +33,7 @@ module DebugVisualizer
   end
 
   DebugVisualizer.register do |data|
-    if data.is_a?(Hash)
+    if data.is_a?(Hash) && data.values.all? {|v| v.is_a?(Integer) || v.is_a?(Float) }
       {
         id: "hash_as_pie_chart",
         name: "Hash As Pie Chart",
@@ -45,6 +45,26 @@ module DebugVisualizer
               labels: data.keys,
               values: data.values,
               type: :pie
+            }
+          ]
+        }
+      }
+    end
+  end
+
+  DebugVisualizer.register do |data|
+    if data.is_a?(Hash) && data.values.all? {|v| v.is_a?(Integer) || v.is_a?(Float) }
+      {
+        id: "hash_as_bar_chart",
+        name: "Hash As Bar Chart",
+        priority: 100,
+        data: {
+          kind: { plotly: true },
+          data: [
+            {
+              x: data.keys,
+              y: data.values,
+              type: :bar
             }
           ]
         }
