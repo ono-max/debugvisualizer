@@ -6,48 +6,47 @@ module DebugVisualizer
         name: "REXML As Tree",
         data: {
           kind: { tree: true },
-          root: get_tree(data)[0]
+          root: get_rexml_as_tree(data)[0]
         }
       }
     end
   end
 
-  def self.get_tree(elems)
+  def self.get_rexml_as_tree(elems)
     result = []
     elems.each_element{|elem|
-      children = []
+      items = [
+        {
+          text: elem.name,
+          emphasis: 'style1'
+        }
+      ]
       elem.attributes.each_attribute{|atr|
-        items = []
         items << {
-          text: "#{atr.name}: ",
-          emphasis: 'style2'
+          text: "  #{atr.name} =",
         }
         items << {
           text: atr.value,
           emphasis: 'style2'
         }
-        children << {
-         items: items, 
-         children: []
-        }
       }
+      children = []
       if elem.has_elements?
-        children.push *get_tree(elem)
+        children = get_rexml_as_tree(elem)
+      end
+      if elem.text && elem.text.strip != ""
+        children << {
+          items: [
+            text: elem.text.strip,
+            emphasis: 'style3'
+          ],
+          children: []
+        }
       end
       tree = {
-        items: [
-          {
-            text: elem.name,
-            emphasis: 'style1'
-          }          
-        ],
+        items: items,
         children: children
       }
-      if elem.text && elem.text.strip != ""
-        tree[:items] << {
-          text: ' ' * 2 + elem.text.strip
-        }
-      end
       result << tree
     }
     result

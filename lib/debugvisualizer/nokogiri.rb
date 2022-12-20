@@ -7,51 +7,51 @@ module DebugVisualizer
         name: "Nokogiri As Tree",
         data: {
           kind: { tree: true },
-          root: get_tree(data.children).last
+          root: get_nokogiri_as_tree(data.children).last
         }
       }
     end
   end
 
-  def self.get_tree(elems)
+  def self.get_nokogiri_as_tree(elems)
     result = []
     elems.each{|elem|
-      child = []
+      items = [
+        {
+          text: elem.name,
+          emphasis: 'style1'
+        }          
+      ]
       elem.attributes.each{|key, val|
-        items = []
         items << {
-          text: "#{key}: ",
-          emphasis: 'style2'
+          text: "  #{key} =",
         }
         items << {
-          text: val.value,
+          text: "\"#{val.value}\"",
           emphasis: 'style2'
-        }
-        child << {
-         items: items, 
-         children: []
         }
       }
+      child = []
       if elem.children
-        child.push *get_tree(elem.children)
+        child = get_nokogiri_as_tree(elem.children)
       end
       next if elem.name == 'text'
 
-      tree = {
-        items: [
-          {
-            text: elem.name,
-            emphasis: 'style1'
-          }          
-        ],
-        children: child
-      }
       text = elem.xpath('text()').text
       if text && text.strip != ""
-        tree[:items] << {
-          text: ' ' * 2 + text.strip
+        child << {
+          items: [
+            text: text.strip,
+            emphasis: 'style3'
+          ],
+          children: []
         }
       end
+
+      tree = {
+        items: items,
+        children: child
+      }
       result << tree
     }
     result
