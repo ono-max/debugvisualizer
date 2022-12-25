@@ -70,4 +70,61 @@ module DebugVisualizer
       }
     end
   end
+
+  def self.get_edges(nodes)
+    return [] if nodes.size < 3
+
+    edges = []
+    prev_id = nodes.first[:id]
+    # Get elements except for `First element` and `Last element`
+    nodes[1..nodes.size - 2].each{|elem|
+      edges << {
+        from: prev_id,
+        to: elem[:id]
+      }
+      prev_id = elem[:id]
+    }
+    edges << {
+      from: nodes.last[:id],
+      to: prev_id,
+      color: 'orange'
+    }
+    edges
+  end
+
+  def self.inspect obj
+    obj.inspect
+  rescue Exception => e
+    "failed to inspect: #{e.message}"
+  end
+
+  def self.get_nodes array
+    nodes = []
+    nodes << {
+      id: rand.to_s,
+      label: 'First element',
+      color: 'orange'
+    }
+    array.each{|elem| nodes << {id: rand.to_s, label: inspect(elem)}}
+    nodes << {
+      id: rand.to_s,
+      label: 'Last element',
+      color: 'orange'
+    }
+    nodes
+  end
+
+  DebugVisualizer.register(Array) do |data|
+    nodes = get_nodes(data)
+    {
+      id: "array_as_graph",
+      name: "Array As Graph",
+      priority: 90,
+      data: {
+        kind: { graph: true },
+        nodes: nodes,
+        edges: get_edges(nodes),
+      }
+    }
+  end
 end
