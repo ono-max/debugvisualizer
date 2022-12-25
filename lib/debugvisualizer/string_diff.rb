@@ -4,7 +4,7 @@ module DebugVisualizer
       {
         id: "string_diff",
         name: "String diff",
-        priority: 50,
+        priority: 120,
         data: {
           kind: { text: true },
           text: data[0],
