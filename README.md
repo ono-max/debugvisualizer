@@ -1,5 +1,7 @@
 # DebugVisualizer
 
+[![](https://user-images.githubusercontent.com/59436572/209464984-16f19f33-5fa5-401a-b420-ce7ad6017dce.png)](https://www.youtube.com/watch?v=9vLVCrpzlDQ)
+
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
