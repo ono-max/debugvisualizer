@@ -1,6 +1,6 @@
 # DebugVisualizer
 
-A libray to use [VS Code Debug Visualizer](https://github.com/hediet/vscode-debug-visualizer) in [Ruby debugger](https://github.com/ruby/debug).
+A library to use [VS Code Debug Visualizer](https://github.com/hediet/vscode-debug-visualizer) in [Ruby debugger](https://github.com/ruby/debug).
 
 [![](https://user-images.githubusercontent.com/59436572/209464984-16f19f33-5fa5-401a-b420-ce7ad6017dce.png)](https://www.youtube.com/watch?v=9vLVCrpzlDQ)
 
